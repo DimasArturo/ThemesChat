@@ -128,6 +128,7 @@ fun ChatScreen(changeTheme: (Themes) -> Unit) {
                     .padding(16.dp)
                     .fillMaxWidth().clickable {
                         scope.launch {
+                            changeTheme(Themes.SUNSET)
                             drawerState.close()
                         }
                     }
@@ -140,7 +141,7 @@ fun ChatScreen(changeTheme: (Themes) -> Unit) {
                             modifier = Modifier
                                 .size(30.dp)
                                 .clip(CircleShape)
-                                .background(Color.Red)
+                                .background(Color(0xFFFFB4A7))
                         )
                         Text(
                             text = "Sunset Theme", fontSize = 18.sp,

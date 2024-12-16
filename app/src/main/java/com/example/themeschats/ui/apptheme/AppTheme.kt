@@ -8,6 +8,8 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.example.compose.darkSunsetScheme
+import com.example.compose.lightSunsetScheme
 import com.example.themeschats.enums.Themes
 import com.example.themeschats.ui.apptheme.themesColors.natural.darkNaturalScheme
 import com.example.themeschats.ui.apptheme.themesColors.natural.lightNaturalScheme
@@ -37,7 +39,7 @@ fun  AppTheme(
         colors = when(theme){
             Themes.ORIGINAL -> if (isDarkMode) darkOriginalScheme else lightOriginalScheme
             Themes.NATURAL -> if (isDarkMode) darkNaturalScheme else lightNaturalScheme
-            Themes.SUNSET -> TODO()
+            Themes.SUNSET -> if (isDarkMode) darkSunsetScheme else lightSunsetScheme
         }
     }
 

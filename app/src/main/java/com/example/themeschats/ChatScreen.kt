@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import com.example.themeschats.components.ChatTextField
 import com.example.themeschats.components.MessageBox
 import com.example.themeschats.models.MessageData
+import com.example.themeschats.utils.automaticResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -82,9 +83,18 @@ fun ChatScreen() {
                     listOfMessagesData = listOfMessagesData + newMessage
                     textInputMessage = ""
 
+                    val responseMessage = automaticResponse()
+
                     scope.launch {
-                        delay(100)
-                        scrollState.scrollTo(scrollState.maxValue)
+                        delay(150)
+                        scrollState.animateScrollTo(scrollState.maxValue)
+
+                        delay(2000)
+                        listOfMessagesData = listOfMessagesData + responseMessage
+
+                        delay(500)
+                        scrollState.animateScrollTo(scrollState.maxValue)
+
                     }
                 }
             )

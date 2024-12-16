@@ -1,11 +1,10 @@
 package com.example.themeschats
 
 import android.util.Log
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -19,11 +18,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.themeschats.components.ChatTextField
-
+import com.example.themeschats.components.MessageBox
+import com.example.themeschats.models.MessageData
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,29 +49,43 @@ fun ChatScreen() {
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
 
+
+        var listOfMessagesData by rememberSaveable {
+            mutableStateOf(listOf<MessageData>() )
+        }
+
         var textInputMessage by rememberSaveable {
             mutableStateOf("")
         }
+        val scrollState = rememberScrollState()
+
+        val scope = rememberCoroutineScope()
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            //Mensajes
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
+            MessageBox(
+                listOfMessagesData=listOfMessagesData,
+                modifier = Modifier.weight(1f),
+                scrollState = scrollState)
 
-            }
             ChatTextField(
                 textInputMessage = textInputMessage,
                 onChangeValueTextInput = { textInputMessage = it },
                 onSendMessage = {
-                    println("Enviando Mensajes")
-                    Log.d("OnSendMessage", textInputMessage)
+                    val newMessage = MessageData(
+                        isMine = true,
+                        text = textInputMessage
+                    )
+                    listOfMessagesData = listOfMessagesData + newMessage
+                    textInputMessage = ""
+
+                    scope.launch {
+                        delay(100)
+                        scrollState.scrollTo(scrollState.maxValue)
+                    }
                 }
             )
         }

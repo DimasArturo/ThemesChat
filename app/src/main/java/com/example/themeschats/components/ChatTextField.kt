@@ -3,6 +3,7 @@ package com.example.themeschats.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -11,6 +12,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,10 +26,13 @@ fun ChatTextField(
 ) {
     //TextField
     Box(
-        modifier = Modifier.fillMaxWidth().padding(16.dp)
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .imePadding()
     ){
 
         OutlinedTextField(
+            placeholder = {Text(text = "Escribe un mensaje")},
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
